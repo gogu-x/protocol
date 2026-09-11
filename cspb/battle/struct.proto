@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
+
+// BattleType 表示创建战斗的业务类型。
+enum BattleType {
+  BATTLE_TYPE_UNSPECIFIED = 0;
+  BATTLE_TYPE_PVE = 1;
+  BATTLE_TYPE_PVP = 2;
+  BATTLE_TYPE_BOSS = 3;
+  BATTLE_TYPE_STORY = 4;
+  BATTLE_TYPE_TEST = 5;
+}
+
+// BattleTeam 表示单位所属阵营。
+enum BattleTeam {
+  BATTLE_TEAM_UNSPECIFIED = 0;
+  BATTLE_TEAM_ATTACKER = 1;
+  BATTLE_TEAM_DEFENDER = 2;
+}
+
+// BattleOutcome 表示战斗结算结果。
+enum BattleOutcome {
+  BATTLE_OUTCOME_UNSPECIFIED = 0;
+  BATTLE_OUTCOME_ATTACKER_WIN = 1;
+  BATTLE_OUTCOME_DEFENDER_WIN = 2;
+  BATTLE_OUTCOME_DRAW = 3;
+}
+
+// TargetRule 表示技能目标选择规则。
+enum TargetRule {
+  TARGET_RULE_UNSPECIFIED = 0;
+  TARGET_RULE_ENEMY_SINGLE = 1;
+  TARGET_RULE_ENEMY_ALL = 2;
+  TARGET_RULE_ALLY_LOWEST_HP = 3;
+  TARGET_RULE_SELF = 4;
+}
+
+// EffectType 表示技能效果类型。
+enum EffectType {
+  EFFECT_TYPE_UNSPECIFIED = 0;
+  EFFECT_TYPE_DAMAGE = 1;
+  EFFECT_TYPE_HEAL = 2;
+  EFFECT_TYPE_APPLY_STATUS = 3;
+}
+
+// StatusType 表示状态类型。
+enum StatusType {
+  STATUS_TYPE_UNSPECIFIED = 0;
+  STATUS_TYPE_STUN = 1;
+  STATUS_TYPE_SILENCE = 2;
+  STATUS_TYPE_DOT = 3;
+  STATUS_TYPE_HOT = 4;
+  STATUS_TYPE_ATTRIBUTE_MODIFIER = 5;
+}
+
+// BattleEventType 表示战斗事件类型。
+enum BattleEventType {
+  BATTLE_EVENT_TYPE_UNSPECIFIED = 0;
+  BATTLE_EVENT_TYPE_ACTION_STARTED = 1;
+  BATTLE_EVENT_TYPE_SKILL_USED = 2;
+  BATTLE_EVENT_TYPE_DAMAGE = 3;
+  BATTLE_EVENT_TYPE_HEAL = 4;
+  BATTLE_EVENT_TYPE_STATUS_APPLIED = 5;
+  BATTLE_EVENT_TYPE_ACTION_SKIPPED = 6;
+  BATTLE_EVENT_TYPE_ACTION_ENDED = 7;
+  BATTLE_EVENT_TYPE_BATTLE_ENDED = 8;
+}
+
+// RoleSkill 是角色携带的技能成长快照。
+message RoleSkill {
+  int32 skill_config_id = 1;
+  int32 level = 2;
+}
+
+// RoleEquip 是角色携带的装备成长快照。
+message RoleEquip {
+  string equip_id = 1;
+  int32 equip_config_id = 2;
+  int32 level = 3;
+  int32 refine_level = 4;
+}
+
+// Role 是由 Game 权威组装的完整角色战斗快照。
+message Role {
+  string role_id = 1;
+  int32 role_config_id = 2;
+  int32 level = 3;
+  int32 star = 4;
+  int32 breakthrough = 5;
+  repeated RoleSkill skills = 6;
+  repeated RoleEquip equips = 7;
+}
+
+// BattleEvent 是一条确定性战斗事件。
+message BattleEvent {
+  uint64 sequence = 1;
+  uint64 action = 2;
+  int64 tick = 3;
+  BattleEventType type = 4;
+  string actor_id = 5;
+  string target_id = 6;
+  string skill_id = 7;
+  string status_id = 8;
+  int64 amount = 9;
+  int64 hp_before = 10;
+  int64 hp_after = 11;
+  string detail = 12;
+}
+
+// BattleUnitResult 是一个单位的最终生命结果。
+message BattleUnitResult {
+  string instance_id = 1;
+  BattleTeam team = 2;
+  int64 hp = 3;
+  int64 max_hp = 4;
+  bool alive = 5;
+}
+
+// BattleCreatedNtf 表示 BattleActor 已成功创建。
+message BattleCreatedNtf {
+  string battle_id = 1;
+  uint64 uid = 2;
+}
+
+// BattleActionNtf 表示一条战斗事件推送。
+message BattleActionNtf {
+  string battle_id = 1;
+  uint64 uid = 2;
+  BattleEvent event = 3;
+}
+
+// BattleFinishedNtf 表示已完成的战斗结果。
+message BattleFinishedNtf {
+  string battle_id = 1;
+  uint64 uid = 2;
+  BattleOutcome outcome = 3;
+  repeated BattleUnitResult units = 4;
+  string checksum = 5;
+}
+
+// BattleResultConfirmedNtf 确认 Game 已消费结算结果。
+message BattleResultConfirmedNtf {
+  string battle_id = 1;
+  uint64 uid = 2;
+}

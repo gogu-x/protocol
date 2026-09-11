@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
+
+// StartBattleAck 表示创建请求的同步接收结果。
+message StartBattleAck {
+  string battle_id = 1;
+}
