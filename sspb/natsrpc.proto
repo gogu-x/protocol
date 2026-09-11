@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/sspb";
+
+message NatsMsgReq{
+    //消息唯一标识
+    int64 sessionID = 1;
+    //目标服务类型
+    string SendModule  = 2;
+    //目标服务类型
+    string TaggerModule  = 3;
+    //发送者Actor Name
+    string SendName = 4;
+    //目标actor Name
+    string TaggerName = 5;
+    //目标服务id
+    int32 id = 6;
+    //nodeId
+    int32 nodeID = 7;
+    //消息
+    bytes Msg   = 8;
+}
+
+message NatsMsgAck {
+    //消息唯一标识
+    int64 sessionID = 1;
+    //目标服务类型
+    string SendModule  = 2;
+    //目标服务类型
+    string TaggerModule  = 3;
+    //发送者Actor Name
+    string SendName = 4;
+    //目标actor Name
+    string TaggerName = 5;
+    //目标服务id
+    int32 id = 6;
+    //nodeId
+    int32 nodeID = 7;
+    //消息
+    bytes Msg   = 8;
+}
+
+message NatsMsgNtf {
+    //消息唯一标识
+    int64 sessionID = 1;
+    //目标服务类型
+    string SendModule  = 2;
+    //目标服务类型
+    string TaggerModule  = 3;
+    //发送者Actor Name
+    string SendName = 4;
+    //目标actor Name
+    string TaggerName = 5;
+    //目标服务id
+    int32 id = 6;
+    //nodeId
+    int32 nodeID = 7;
+    //消息
+    bytes Msg   = 8;
+}

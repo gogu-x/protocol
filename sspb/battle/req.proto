@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
 
-import "battle/struct.proto";
+import "sspb/battle/struct.proto";
 
 // StartBattleReq 创建一场自动战斗。公共请求头由生成工具注入。
 message StartBattleReq {
@@ -12,4 +12,6 @@ message StartBattleReq {
   repeated Role attacker_roles = 4;
   repeated Role defender_roles = 5;
   int32 monster_group_config_id = 6;
+  int64 uid = 7;
+  int32 sid = 8;
 }

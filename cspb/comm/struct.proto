@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
+
+message comm {
+  uint64   uID   = 1;
+  uint32   serverID = 2;
+  string   sessionID = 3;
+}
+
+message event {
+   string name = 1;
+   int32  eventTyp = 2;
+   map<string,int32> args =3;
+}
+
+message TypIDVal{
+   string typ = 1;
+   int32 id = 2;
+   int64 val = 3;
+   int32 pro = 4;
+}

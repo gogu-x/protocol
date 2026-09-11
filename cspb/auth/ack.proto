@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_auth";
+
+import "cspb/comm/error.proto";
+
+message LoginGameAck {
+  ErrCode  code  = 1;
+  uint64   uid   = 2;
+}
