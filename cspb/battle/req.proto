@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
+
+import "cspb/battle/struct.proto";
+
+// StartBattleReq 请求开始一场战斗。UID/serverID/sessionID 公共头由生成工具注入；
+// attacker_roles/defender_roles/source_node_id 由 Game 权威覆盖，客户端值不可信。
+message StartBattleReq {
+  BattleType battle_type = 1;
+  string business_id = 2;
+  repeated Role attacker_roles = 3;
+  repeated Role defender_roles = 4;
+  int32 monster_group_config_id = 5;
+  uint32 source_node_id = 6;
+}

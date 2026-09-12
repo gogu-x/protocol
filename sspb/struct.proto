@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/sspb";
+
+message event {
+  string name = 1;
+  int32  eventTyp = 2;
+  map<string,int32> args =3;
+}

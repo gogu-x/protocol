@@ -65,6 +65,7 @@ enum BattleEventType {
   BATTLE_EVENT_TYPE_ACTION_SKIPPED = 6;
   BATTLE_EVENT_TYPE_ACTION_ENDED = 7;
   BATTLE_EVENT_TYPE_BATTLE_ENDED = 8;
+  BATTLE_EVENT_TYPE_ACTION_CANCELLED = 9;
 }
 
 // RoleSkill 是角色携带的技能成长快照。
@@ -106,6 +107,7 @@ message BattleEvent {
   int64 hp_before = 10;
   int64 hp_after = 11;
   string detail = 12;
+  repeated string target_ids = 13;
 }
 
 // BattleUnitResult 是一个单位的最终生命结果。
@@ -121,6 +123,7 @@ message BattleUnitResult {
 message BattleCreatedNtf {
   string battle_id = 1;
   uint64 uid = 2;
+  int32 tick_duration_ms = 3;
 }
 
 // BattleActionNtf 表示一条战斗事件推送。

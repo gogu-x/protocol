@@ -2,7 +2,8 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
 
-// StartBattleAck 表示创建请求的同步接收结果。
+// StartBattleAck 表示 Game 是否接受创建请求；battle_id 可能要等 Created 推送才确定。
 message StartBattleAck {
   string battle_id = 1;
+  string error = 2;
 }
