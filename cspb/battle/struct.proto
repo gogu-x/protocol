@@ -5,7 +5,7 @@ option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
 // BattleType 表示创建战斗的业务类型。
 enum BattleType {
   BATTLE_TYPE_UNSPECIFIED = 0;
-  BATTLE_TYPE_PVE = 1;
+  BATTLE_TYPE_TOWER = 1;
   BATTLE_TYPE_PVP = 2;
   BATTLE_TYPE_BOSS = 3;
   BATTLE_TYPE_STORY = 4;
@@ -108,6 +108,12 @@ message BattleEvent {
   int64 hp_after = 11;
   string detail = 12;
   repeated string target_ids = 13;
+  // 动作窗口的三个 tick，仅 SKILL_USED 事件填充。
+  // 服务端在发出 SKILL_USED 时就已经算出了 impact/end，把它们随事件一起下发，
+  // 客户端收到单条事件即可开始播放攻击动作，无需等待动作结束时的 ACTION_ENDED。
+  int64 start_tick = 14;
+  int64 impact_tick = 15;
+  int64 end_tick = 16;
 }
 
 // BattleUnitResult 是一个单位的最终生命结果。
@@ -124,6 +130,9 @@ message BattleCreatedNtf {
   string battle_id = 1;
   uint64 uid = 2;
   int32 tick_duration_ms = 3;
+  // 参战单位名单。战斗创建时即已确定，随创建通知一并下发，
+  // 客户端可在进入战斗页的第一时间就把双方单位摆好，而不是等某个单位先行动。
+  repeated BattleUnitResult units = 4;
 }
 
 // BattleActionNtf 表示一条战斗事件推送。
@@ -140,6 +149,9 @@ message BattleFinishedNtf {
   BattleOutcome outcome = 3;
   repeated BattleUnitResult units = 4;
   string checksum = 5;
+  // 战斗类型。Game 结算要按类型分发（爬塔/副本/BOSS 给的东西不一样），
+  // 光靠 outcome 和单位状态判断不出这是哪一种。
+  BattleType battle_type = 6;
 }
 
 // BattleResultConfirmedNtf 确认 Game 已消费结算结果。
