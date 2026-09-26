@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_equipment";
+
+// 装备槽位；客户端展示文字仅由客户端本地化，服务端使用枚举进行校验。
+enum EquipSlot {
+  EQUIP_SLOT_UNSPECIFIED = 0;
+  EQUIP_SLOT_WEAPON = 1;
+  EQUIP_SLOT_HEAD = 2;
+  EQUIP_SLOT_BODY = 3;
+  EQUIP_SLOT_HAND = 4;
+  EQUIP_SLOT_WAIST = 5;
+  EQUIP_SLOT_FOOT = 6;
+}
+
+message EquipmentItem {
+  string instance_id = 1;
+  int32 config_id = 2;
+  EquipSlot slot = 3;
+  int32 level = 4;
+  int32 refine_level = 5;
+  bool equipped = 6;
+  int64 max_hp = 7;
+  int64 attack = 8;
+  int64 defense = 9;
+  int64 speed = 10;
+}
+
+message RoleEquipmentData {
+  string role_id = 1;
+  int32 role_level = 2;
+  int64 max_hp = 3;
+  int64 attack = 4;
+  int64 defense = 5;
+  int64 speed = 6;
+  repeated EquipmentItem items = 7;
+}
+
+// 登录后与打开角色装备页时拉取权威装备清单。
+message GetRoleEquipmentReq {}
+message GetRoleEquipmentAck {
+  RoleEquipmentData data = 1;
+  string error = 2;
+}
+
+// equipment_id 为空表示卸下指定槽位；否则服务端校验归属与槽位后穿戴。
+message ChangeRoleEquipmentReq {
+  EquipSlot slot = 1;
+  string equipment_id = 2;
+}
+message ChangeRoleEquipmentAck {
+  RoleEquipmentData data = 1;
+  string error = 2;
+}
