@@ -42,6 +42,8 @@ enum EffectType {
   EFFECT_TYPE_DAMAGE = 1;
   EFFECT_TYPE_HEAL = 2;
   EFFECT_TYPE_APPLY_STATUS = 3;
+  EFFECT_TYPE_ICE_BURST = 4;
+  EFFECT_TYPE_THUNDER = 5;
 }
 
 // StatusType 表示状态类型。
@@ -68,6 +70,15 @@ enum BattleEventType {
   BATTLE_EVENT_TYPE_ACTION_CANCELLED = 9;
 }
 
+// BattleEventReason 表示行动跳过或取消的原因。
+enum BattleEventReason {
+  BATTLE_EVENT_REASON_UNSPECIFIED = 0;
+  BATTLE_EVENT_REASON_ACTOR_DEAD = 1;
+  BATTLE_EVENT_REASON_STUNNED = 2;
+  BATTLE_EVENT_REASON_TARGET_DEAD = 3;
+  BATTLE_EVENT_REASON_EFFECT_ERROR = 4;
+}
+
 // RoleSkill 是角色携带的技能成长快照。
 message RoleSkill {
   int32 skill_config_id = 1;
@@ -91,6 +102,8 @@ message Role {
   int32 breakthrough = 5;
   repeated RoleSkill skills = 6;
   repeated RoleEquip equips = 7;
+  // Game 从已装备魂玉提取的效果词条配置 ID；Battle 按配置还原角色被动效果。
+  repeated int32 soul_jade_effect_affix_ids = 9;
 }
 
 // BattleEvent 是一条确定性战斗事件。
@@ -106,7 +119,8 @@ message BattleEvent {
   int64 amount = 9;
   int64 hp_before = 10;
   int64 hp_after = 11;
-  string detail = 12;
+  reserved 12;
+  reserved "detail";
   repeated string target_ids = 13;
   // 动作窗口的三个 tick，仅 SKILL_USED 事件填充。
   // 服务端在发出 SKILL_USED 时就已经算出了 impact/end，把它们随事件一起下发，
@@ -114,6 +128,13 @@ message BattleEvent {
   int64 start_tick = 14;
   int64 impact_tick = 15;
   int64 end_tick = 16;
+  // 以下字段按事件类型填写，未涉及的字段保持枚举零值或 false。
+  EffectType effect_type = 17;
+  StatusType status_type = 18;
+  bool critical = 19;
+  bool basic_attack = 20;
+  BattleEventReason reason = 21;
+  BattleOutcome outcome = 22;
 }
 
 // BattleUnitResult 是一个单位的最终生命结果。
