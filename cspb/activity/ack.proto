@@ -7,11 +7,11 @@ import "cspb/comm/error.proto";
 
 message GetActivityListAck {
   repeated ActivityInfo activities = 1;
+  optional ErrCode code = 2;
 }
 
 message JoinActivityAck {
   ErrCode code = 1;
-  string  msg  = 2;
 }
 
 message GetProgressAck {
@@ -21,5 +21,4 @@ message GetProgressAck {
 
 message ClaimRewardAck {
   ErrCode code = 1;
-  string  msg  = 2;
 }

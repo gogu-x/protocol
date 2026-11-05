@@ -28,7 +28,6 @@ message AuthLoginReq {
 
 message AuthAck {
   ErrCode code  = 1;
-  string  msg   = 2;
   uint64  uid   = 3;
   string  token = 4;
   uint32   server_id = 5;
@@ -41,6 +40,7 @@ message VerifyTokenReq {
 message VerifyAck {
   bool   valid = 1;
   uint64 uid   = 2;
+  optional ErrCode code = 3;
 }
 
 // GetServerListReq is used before login to look up all registrations for an account.
@@ -55,7 +55,6 @@ message ServerAccount {
 
 message ServerListAck {
   ErrCode                 code     = 1;
-  string                  msg      = 2;
   repeated ServerAccount accounts = 3;
 }
 
@@ -76,7 +75,6 @@ message CreateOrderReq {
 
 message OrderAck {
   ErrCode code     = 1;
-  string  msg      = 2;
   string  order_id = 3;
 }
 
@@ -90,6 +88,7 @@ message OrderDetail {
   string      product_id = 3;
   string      server_id  = 4;
   OrderStatus status     = 5;
+  optional ErrCode code = 6;
 }
 
 service OrderService {

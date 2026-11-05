@@ -1,0 +1,41 @@
+syntax = "proto3";
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_souljade";
+import "cspb/common/growth.proto";
+import "cspb/comm/error.proto";
+// 属性为 1 生命、2 攻击、3 防御、4 速度；增幅使用千分比。
+message SoulJadeAffix { int32 attribute = 1; int32 permille = 2; }
+message SoulJadeItem {
+  string instance_id = 1;
+  int32 config_id = 2;
+  string name = 3;
+  int32 level = 4;
+  int32 max_level = 5;
+  repeated SoulJadeAffix affixes = 6;
+  int64 upgrade_cost = 7;
+  int64 refine_cost = 8;
+  string rarity = 9;
+  string icon_key = 10;
+}
+message SoulJadeSlot { int32 slot = 1; string instance_id = 2; }
+message RoleSoulJadeData {
+  uint64 revision = 1;
+  int64 essence = 2;
+  repeated SoulJadeItem items = 3;
+  repeated SoulJadeSlot slots = 4;
+  GrowthBonuses bonuses = 5;
+  string role_id = 6;
+}
+message GetRoleSoulJadeReq { uint64 request_id = 1; }
+// 六个通用槽位；实例为空时卸下，同一配置不能重复镶嵌。
+message ChangeRoleSoulJadeReq {
+  uint64 request_id = 1;
+  uint64 expected_revision = 2;
+  int32 slot = 3;
+  string instance_id = 4;
+}
+message UpgradeRoleSoulJadeReq { uint64 request_id = 1; uint64 expected_revision = 2; string instance_id = 3; }
+message RefineRoleSoulJadeReq { uint64 request_id = 1; uint64 expected_revision = 2; string instance_id = 3; }
+message GetRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; optional ErrCode code = 4; }
+message ChangeRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; optional ErrCode code = 4; }
+message UpgradeRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; optional ErrCode code = 4; }
+message RefineRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; optional ErrCode code = 4; }

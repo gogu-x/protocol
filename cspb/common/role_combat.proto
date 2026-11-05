@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
+
+import "cspb/comm/error.proto";
+
+// RoleCombatStatsData contains authoritative final combat attributes.
+message RoleCombatStatsData {
+  string role_id = 1;
+  int64 max_hp = 2;
+  int64 attack = 3;
+  int64 defense = 4;
+  int64 speed = 5;
+}
+
+// GetRoleCombatStatsReq requests the current role's combat attributes.
+message GetRoleCombatStatsReq {
+  uint64 request_id = 1;
+}
+
+// GetRoleCombatStatsAck correlates the authoritative snapshot with its request.
+message GetRoleCombatStatsAck {
+  uint64 request_id = 1;
+  RoleCombatStatsData data = 2;
+  optional ErrCode code = 3;
+}

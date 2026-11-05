@@ -17,9 +17,13 @@ enum ErrCode {
     USERNAME_EXISTS  = -2001;
     WRONG_PASSWORD   = -2002;
     INTERNAL         = -2003;
+    ACCOUNT_NOT_FOUND = -2004; // Account is not registered.
+    INVALID_TOKEN = -2005; // Authentication token is invalid or expired.
 
     GUILD_EXISTS     = -3001;
     GUILD_NOT_FOUND  = -3002;
     ALREADY_IN_GUILD = -3003;
     NOT_IN_GUILD     = -3004;
+
+    ORDER_NOT_FOUND = -7001; // Order does not exist.
 }

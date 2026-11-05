@@ -7,12 +7,10 @@ import "cspb/gateway/struct.proto";
 
 message LoginAck {
   ErrCode code = 1;
-  string  msg  = 2;
 }
 
 message RegisterAck {
   ErrCode code = 1;
-  string  msg  = 2;
 }
 
 

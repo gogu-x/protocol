@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
+import "cspb/common/growth.proto";
 
 // BattleType 表示创建战斗的业务类型。
 enum BattleType {
@@ -104,6 +105,8 @@ message Role {
   repeated RoleEquip equips = 7;
   // Game 从已装备魂玉提取的效果词条配置 ID；Battle 按配置还原角色被动效果。
   repeated int32 soul_jade_effect_affix_ids = 9;
+  // 仅由 Game 从玩家存档组装，忽略客户端输入。
+  GrowthBonuses growth_bonus = 8;
 }
 
 // BattleEvent 是一条确定性战斗事件。
@@ -119,8 +122,6 @@ message BattleEvent {
   int64 amount = 9;
   int64 hp_before = 10;
   int64 hp_after = 11;
-  reserved 12;
-  reserved "detail";
   repeated string target_ids = 13;
   // 动作窗口的三个 tick，仅 SKILL_USED 事件填充。
   // 服务端在发出 SKILL_USED 时就已经算出了 impact/end，把它们随事件一起下发，

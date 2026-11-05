@@ -7,18 +7,15 @@ import "cspb/comm/error.proto";
 
 message CreateGuildAck {
   ErrCode   code  = 1;
-  string    msg   = 2;
   GuildInfo guild = 3;
 }
 
 message JoinGuildAck {
   ErrCode code = 1;
-  string  msg  = 2;
 }
 
 message LeaveGuildAck {
   ErrCode code = 1;
-  string  msg  = 2;
 }
 
 message GetGuildAck {

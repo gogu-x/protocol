@@ -1,0 +1,9 @@
+syntax = "proto3";
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
+// 魂玉和天赋提供的基础属性增幅；100 表示提升 10%。
+message GrowthBonuses {
+  int32 max_hp_permille = 1;
+  int32 attack_permille = 2;
+  int32 defense_permille = 3;
+  int32 speed_permille = 4;
+}
