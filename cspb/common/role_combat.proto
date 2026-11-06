@@ -2,8 +2,6 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
 
-import "cspb/comm/error.proto";
-
 // RoleCombatStatsData contains authoritative final combat attributes.
 message RoleCombatStatsData {
   string role_id = 1;
@@ -22,5 +20,5 @@ message GetRoleCombatStatsReq {
 message GetRoleCombatStatsAck {
   uint64 request_id = 1;
   RoleCombatStatsData data = 2;
-  optional ErrCode code = 3;
+  int32 code = 3;
 }

@@ -3,22 +3,20 @@ syntax = "proto3";
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_activity";
 
 import "cspb/activity/struct.proto";
-import "cspb/comm/error.proto";
-
 message GetActivityListAck {
   repeated ActivityInfo activities = 1;
-  optional ErrCode code = 2;
+  int32 code = 2;
 }
 
 message JoinActivityAck {
-  ErrCode code = 1;
+  int32 code = 1;
 }
 
 message GetProgressAck {
-  ErrCode          code     = 1;
+  int32          code     = 1;
   ActivityProgress progress = 2;
 }
 
 message ClaimRewardAck {
-  ErrCode code = 1;
+  int32 code = 1;
 }

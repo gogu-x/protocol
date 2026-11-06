@@ -2,19 +2,18 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_gateway";
 
-import "cspb/comm/error.proto";
 import "cspb/gateway/struct.proto";
 
 message LoginAck {
-  ErrCode code = 1;
+  int32 code = 1;
 }
 
 message RegisterAck {
-  ErrCode code = 1;
+  int32 code = 1;
 }
 
 
 message ServerListAck {
-  ErrCode  code   = 1;
+  int32  code   = 1;
   repeated ServerAccount accounts = 2;
 }

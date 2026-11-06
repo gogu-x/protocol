@@ -1,7 +1,6 @@
 syntax = "proto3";
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_souljade";
 import "cspb/common/growth.proto";
-import "cspb/comm/error.proto";
 // 属性为 1 生命、2 攻击、3 防御、4 速度；增幅使用千分比。
 message SoulJadeAffix { int32 attribute = 1; int32 permille = 2; }
 message SoulJadeItem {
@@ -35,7 +34,7 @@ message ChangeRoleSoulJadeReq {
 }
 message UpgradeRoleSoulJadeReq { uint64 request_id = 1; uint64 expected_revision = 2; string instance_id = 3; }
 message RefineRoleSoulJadeReq { uint64 request_id = 1; uint64 expected_revision = 2; string instance_id = 3; }
-message GetRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; optional ErrCode code = 4; }
-message ChangeRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; optional ErrCode code = 4; }
-message UpgradeRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; optional ErrCode code = 4; }
-message RefineRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; optional ErrCode code = 4; }
+message GetRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; int32 code = 4; }
+message ChangeRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; int32 code = 4; }
+message UpgradeRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; int32 code = 4; }
+message RefineRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; int32 code = 4; }

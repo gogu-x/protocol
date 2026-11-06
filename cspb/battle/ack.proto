@@ -1,10 +1,8 @@
 syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
-import "cspb/comm/error.proto";
-
 // StartBattleAck 表示 Game 是否接受创建请求；battle_id 可能要等 Created 推送才确定。
 message StartBattleAck {
   string battle_id = 1;
-  optional ErrCode code = 3;
+  int32 code = 3;
 }

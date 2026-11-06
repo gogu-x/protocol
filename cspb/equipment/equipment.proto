@@ -1,8 +1,6 @@
 syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_equipment";
-import "cspb/comm/error.proto";
-
 // 装备槽位；客户端展示文字仅由客户端本地化，服务端使用枚举进行校验。
 enum EquipSlot {
   EQUIP_SLOT_UNSPECIFIED = 0;
@@ -54,7 +52,7 @@ message GetRoleEquipmentReq {
 message GetRoleEquipmentAck {
   RoleEquipmentData data = 1;
   uint64 request_id = 3;
-  optional ErrCode code = 4;
+  int32 code = 4;
 }
 
 // equipment_id 为空表示卸下指定槽位；否则服务端校验归属与槽位后穿戴。
@@ -66,5 +64,5 @@ message ChangeRoleEquipmentReq {
 message ChangeRoleEquipmentAck {
   RoleEquipmentData data = 1;
   uint64 request_id = 3;
-  optional ErrCode code = 4;
+  int32 code = 4;
 }

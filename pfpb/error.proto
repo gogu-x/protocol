@@ -3,27 +3,3 @@ syntax = "proto3";
 package platform;
 
 option go_package = "github.com/gogu-x/gogs/pb/pfpb/pb_pf";
-
-enum ErrCode {
-    OK = 0;
-
-    UNKNOWN = -1;
-    PARAM   = -2;
-
-    UNAUTHORIZED      = -1001;
-    LOGIN_IN_PROGRESS = -1002;
-    SERVER_NOT_FOUND  = -1003;
-
-    USERNAME_EXISTS  = -2001;
-    WRONG_PASSWORD   = -2002;
-    INTERNAL         = -2003;
-    ACCOUNT_NOT_FOUND = -2004; // Account is not registered.
-    INVALID_TOKEN = -2005; // Authentication token is invalid or expired.
-
-    GUILD_EXISTS     = -3001;
-    GUILD_NOT_FOUND  = -3002;
-    ALREADY_IN_GUILD = -3003;
-    NOT_IN_GUILD     = -3004;
-
-    ORDER_NOT_FOUND = -7001; // Order does not exist.
-}
