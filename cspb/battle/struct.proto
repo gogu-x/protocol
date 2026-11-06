@@ -109,6 +109,8 @@ enum BattleEventType {
   BATTLE_EVENT_TYPE_BATTLE_ENDED = 8;
   // 行动取消
   BATTLE_EVENT_TYPE_ACTION_CANCELLED = 9;
+  // 状态已移除
+  BATTLE_EVENT_TYPE_STATUS_REMOVED = 10;
 }
 
 // 行动跳过或取消的原因
@@ -213,6 +215,12 @@ message BattleEvent {
   BattleEventReason reason = 21;
   // 战斗结算结果
   BattleOutcome outcome = 22;
+  // 状态实例编号，施加、刷新、周期生效及移除事件携带
+  uint64 status_instance_id = 23;
+  // 状态到期逻辑帧，按回合持续时为零
+  int64 status_expire_tick = 24;
+  // 状态刷新版本，较旧版本的到期任务不再生效
+  uint64 status_version = 25;
 }
 
 // 一个单位的最终生命结果
