@@ -2,21 +2,33 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_guild";
 
+import "cspb/common/error.proto";
 import "cspb/guild/struct.proto";
+
+// 创建公会响应
 message CreateGuildAck {
-  int32   code  = 1;
+  // 请求处理结果
+  ErrCode code = 1;
+  // 创建后的公会信息
   GuildInfo guild = 3;
 }
 
+// 加入公会响应
 message JoinGuildAck {
-  int32 code = 1;
+  // 请求处理结果
+  ErrCode code = 1;
 }
 
+// 离开公会响应
 message LeaveGuildAck {
-  int32 code = 1;
+  // 请求处理结果
+  ErrCode code = 1;
 }
 
+// 查询公会信息响应
 message GetGuildAck {
-  int32   code  = 1;
+  // 请求处理结果
+  ErrCode code = 1;
+  // 公会信息
   GuildInfo guild = 2;
 }

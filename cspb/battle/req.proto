@@ -4,13 +4,19 @@ option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
 
 import "cspb/battle/struct.proto";
 
-// StartBattleReq 请求开始一场战斗。UID/serverID/sessionID 公共头由生成工具注入；
-// attacker_roles/defender_roles/source_node_id 由 Game 权威覆盖，客户端值不可信。
+// 开始战斗请求，玩家、服务器和会话编号公共头由生成工具注入
+// 双方角色与来源节点由游戏服覆盖，客户端值不可信
 message StartBattleReq {
+  // 战斗业务类型
   BattleType battle_type = 1;
+  // 业务编号
   string business_id = 2;
+  // 进攻方角色列表，由游戏服组装
   repeated Role attacker_roles = 3;
+  // 防守方角色列表，由游戏服组装
   repeated Role defender_roles = 4;
+  // 怪物组配置编号
   int32 monster_group_config_id = 5;
+  // 来源节点编号，由游戏服填写
   uint32 source_node_id = 6;
 }

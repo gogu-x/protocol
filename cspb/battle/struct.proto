@@ -3,181 +3,276 @@ syntax = "proto3";
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
 import "cspb/common/growth.proto";
 
-// BattleType 表示创建战斗的业务类型。
+// 创建战斗的业务类型
 enum BattleType {
+  // 未指定
   BATTLE_TYPE_UNSPECIFIED = 0;
+  // 爬塔战斗
   BATTLE_TYPE_TOWER = 1;
+  // 玩家对战
   BATTLE_TYPE_PVP = 2;
+  // 首领战斗
   BATTLE_TYPE_BOSS = 3;
+  // 剧情战斗
   BATTLE_TYPE_STORY = 4;
+  // 测试战斗
   BATTLE_TYPE_TEST = 5;
 }
 
-// BattleTeam 表示单位所属阵营。
+// 单位所属阵营
 enum BattleTeam {
+  // 未指定
   BATTLE_TEAM_UNSPECIFIED = 0;
+  // 进攻方
   BATTLE_TEAM_ATTACKER = 1;
+  // 防守方
   BATTLE_TEAM_DEFENDER = 2;
 }
 
-// BattleOutcome 表示战斗结算结果。
+// 战斗结算结果
 enum BattleOutcome {
+  // 未指定
   BATTLE_OUTCOME_UNSPECIFIED = 0;
+  // 进攻方胜利
   BATTLE_OUTCOME_ATTACKER_WIN = 1;
+  // 防守方胜利
   BATTLE_OUTCOME_DEFENDER_WIN = 2;
+  // 平局
   BATTLE_OUTCOME_DRAW = 3;
 }
 
-// TargetRule 表示技能目标选择规则。
+// 技能目标选择规则
 enum TargetRule {
+  // 未指定
   TARGET_RULE_UNSPECIFIED = 0;
+  // 敌方单体
   TARGET_RULE_ENEMY_SINGLE = 1;
+  // 敌方全体
   TARGET_RULE_ENEMY_ALL = 2;
+  // 生命值最低的友方单位
   TARGET_RULE_ALLY_LOWEST_HP = 3;
+  // 自身
   TARGET_RULE_SELF = 4;
 }
 
-// EffectType 表示技能效果类型。
+// 技能效果类型
 enum EffectType {
+  // 未指定
   EFFECT_TYPE_UNSPECIFIED = 0;
+  // 伤害
   EFFECT_TYPE_DAMAGE = 1;
+  // 治疗
   EFFECT_TYPE_HEAL = 2;
+  // 施加状态
   EFFECT_TYPE_APPLY_STATUS = 3;
+  // 冰爆效果
   EFFECT_TYPE_ICE_BURST = 4;
+  // 雷击效果
   EFFECT_TYPE_THUNDER = 5;
 }
 
-// StatusType 表示状态类型。
+// 状态类型
 enum StatusType {
+  // 未指定
   STATUS_TYPE_UNSPECIFIED = 0;
+  // 眩晕
   STATUS_TYPE_STUN = 1;
+  // 沉默
   STATUS_TYPE_SILENCE = 2;
+  // 持续伤害
   STATUS_TYPE_DOT = 3;
+  // 持续治疗
   STATUS_TYPE_HOT = 4;
+  // 属性修正
   STATUS_TYPE_ATTRIBUTE_MODIFIER = 5;
 }
 
-// BattleEventType 表示战斗事件类型。
+// 战斗事件类型
 enum BattleEventType {
+  // 未指定
   BATTLE_EVENT_TYPE_UNSPECIFIED = 0;
+  // 行动开始
   BATTLE_EVENT_TYPE_ACTION_STARTED = 1;
+  // 使用技能
   BATTLE_EVENT_TYPE_SKILL_USED = 2;
+  // 伤害
   BATTLE_EVENT_TYPE_DAMAGE = 3;
+  // 治疗
   BATTLE_EVENT_TYPE_HEAL = 4;
+  // 状态已施加
   BATTLE_EVENT_TYPE_STATUS_APPLIED = 5;
+  // 行动跳过
   BATTLE_EVENT_TYPE_ACTION_SKIPPED = 6;
+  // 行动结束
   BATTLE_EVENT_TYPE_ACTION_ENDED = 7;
+  // 战斗结束
   BATTLE_EVENT_TYPE_BATTLE_ENDED = 8;
+  // 行动取消
   BATTLE_EVENT_TYPE_ACTION_CANCELLED = 9;
 }
 
-// BattleEventReason 表示行动跳过或取消的原因。
+// 行动跳过或取消的原因
 enum BattleEventReason {
+  // 未指定
   BATTLE_EVENT_REASON_UNSPECIFIED = 0;
+  // 行动单位已死亡
   BATTLE_EVENT_REASON_ACTOR_DEAD = 1;
+  // 行动单位被眩晕
   BATTLE_EVENT_REASON_STUNNED = 2;
+  // 目标单位已死亡
   BATTLE_EVENT_REASON_TARGET_DEAD = 3;
+  // 效果执行错误
   BATTLE_EVENT_REASON_EFFECT_ERROR = 4;
 }
 
-// RoleSkill 是角色携带的技能成长快照。
+// 角色携带的技能成长快照
 message RoleSkill {
+  // 技能配置编号
   int32 skill_config_id = 1;
+  // 等级
   int32 level = 2;
 }
 
-// RoleEquip 是角色携带的装备成长快照。
+// 角色携带的装备成长快照
 message RoleEquip {
+  // 装备实例编号
   string equip_id = 1;
+  // 装备配置编号
   int32 equip_config_id = 2;
+  // 等级
   int32 level = 3;
+  // 精炼等级
   int32 refine_level = 4;
 }
 
-// Role 是由 Game 权威组装的完整角色战斗快照。
+// 由游戏服组装的完整角色战斗快照
 message Role {
+  // 角色实例编号
   string role_id = 1;
+  // 角色配置编号
   int32 role_config_id = 2;
+  // 等级
   int32 level = 3;
+  // 星级
   int32 star = 4;
+  // 突破等级
   int32 breakthrough = 5;
+  // 技能成长快照列表
   repeated RoleSkill skills = 6;
+  // 装备成长快照列表
   repeated RoleEquip equips = 7;
-  // Game 从已装备魂玉提取的效果词条配置 ID；Battle 按配置还原角色被动效果。
+  // 已装备魂玉的效果词条配置编号，游戏服提取后由战斗服还原被动效果
   repeated int32 soul_jade_effect_affix_ids = 9;
-  // 仅由 Game 从玩家存档组装，忽略客户端输入。
+  // 成长属性加成，仅由游戏服从玩家存档组装，忽略客户端输入
   GrowthBonuses growth_bonus = 8;
 }
 
-// BattleEvent 是一条确定性战斗事件。
+// 一条确定性战斗事件
 message BattleEvent {
+  // 事件序号
   uint64 sequence = 1;
+  // 行动序号
   uint64 action = 2;
+  // 事件发生的逻辑帧
   int64 tick = 3;
+  // 战斗事件类型
   BattleEventType type = 4;
+  // 行动单位编号
   string actor_id = 5;
+  // 目标单位编号
   string target_id = 6;
+  // 技能编号
   string skill_id = 7;
+  // 状态编号
   string status_id = 8;
+  // 本次效果数值
   int64 amount = 9;
+  // 效果生效前生命值
   int64 hp_before = 10;
+  // 效果生效后生命值
   int64 hp_after = 11;
+  // 目标单位编号列表
   repeated string target_ids = 13;
-  // 动作窗口的三个 tick，仅 SKILL_USED 事件填充。
-  // 服务端在发出 SKILL_USED 时就已经算出了 impact/end，把它们随事件一起下发，
-  // 客户端收到单条事件即可开始播放攻击动作，无需等待动作结束时的 ACTION_ENDED。
+  // 动作开始逻辑帧，仅技能使用事件填写
+  // 服务端发出技能使用事件时已计算命中和结束逻辑帧，随事件一起下发，
+  // 客户端收到事件即可播放攻击动作，无需等待行动结束事件
   int64 start_tick = 14;
+  // 动作命中逻辑帧，仅技能使用事件填写
   int64 impact_tick = 15;
+  // 动作结束逻辑帧，仅技能使用事件填写
   int64 end_tick = 16;
-  // 以下字段按事件类型填写，未涉及的字段保持枚举零值或 false。
+  // 技能效果类型；以下字段按事件类型填写，未涉及的字段保持枚举零值或布尔假值
   EffectType effect_type = 17;
+  // 状态类型
   StatusType status_type = 18;
+  // 是否暴击
   bool critical = 19;
+  // 是否普通攻击
   bool basic_attack = 20;
+  // 行动跳过或取消原因
   BattleEventReason reason = 21;
+  // 战斗结算结果
   BattleOutcome outcome = 22;
 }
 
-// BattleUnitResult 是一个单位的最终生命结果。
+// 一个单位的最终生命结果
 message BattleUnitResult {
+  // 实例编号
   string instance_id = 1;
+  // 所属阵营
   BattleTeam team = 2;
+  // 当前生命值
   int64 hp = 3;
+  // 最大生命值
   int64 max_hp = 4;
+  // 是否存活
   bool alive = 5;
 }
 
-// BattleCreatedNtf 表示 BattleActor 已成功创建。
+// 战斗创建成功通知
 message BattleCreatedNtf {
+  // 战斗编号
   string battle_id = 1;
+  // 玩家编号
   uint64 uid = 2;
+  // 逻辑帧时长，单位为毫秒
   int32 tick_duration_ms = 3;
   // 参战单位名单。战斗创建时即已确定，随创建通知一并下发，
-  // 客户端可在进入战斗页的第一时间就把双方单位摆好，而不是等某个单位先行动。
+  // 客户端可在进入战斗页的第一时间就把双方单位摆好，而不是等某个单位先行动
   repeated BattleUnitResult units = 4;
 }
 
-// BattleActionNtf 表示一条战斗事件推送。
+// 一条战斗事件推送
 message BattleActionNtf {
+  // 战斗编号
   string battle_id = 1;
+  // 玩家编号
   uint64 uid = 2;
+  // 战斗事件
   BattleEvent event = 3;
 }
 
-// BattleFinishedNtf 表示已完成的战斗结果。
+// 已完成的战斗结果
 message BattleFinishedNtf {
+  // 战斗编号
   string battle_id = 1;
+  // 玩家编号
   uint64 uid = 2;
+  // 战斗结算结果
   BattleOutcome outcome = 3;
+  // 参战单位结果列表
   repeated BattleUnitResult units = 4;
+  // 战斗结果校验值
   string checksum = 5;
-  // 战斗类型。Game 结算要按类型分发（爬塔/副本/BOSS 给的东西不一样），
-  // 光靠 outcome 和单位状态判断不出这是哪一种。
+  // 战斗类型，游戏服按爬塔、副本、首领等类型分发结算奖励，
+  // 仅凭结算结果和单位状态无法确定业务类型
   BattleType battle_type = 6;
 }
 
-// BattleResultConfirmedNtf 确认 Game 已消费结算结果。
+// 游戏服已处理战斗结算结果的确认通知
 message BattleResultConfirmedNtf {
+  // 战斗编号
   string battle_id = 1;
+  // 玩家编号
   uint64 uid = 2;
 }

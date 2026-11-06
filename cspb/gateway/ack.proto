@@ -2,18 +2,25 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_gateway";
 
+import "cspb/common/error.proto";
 import "cspb/gateway/struct.proto";
 
+// 网关登录响应
 message LoginAck {
-  int32 code = 1;
+  // 请求处理结果
+  ErrCode code = 1;
 }
 
+// 网关注册响应
 message RegisterAck {
-  int32 code = 1;
+  // 请求处理结果
+  ErrCode code = 1;
 }
 
-
+// 服务器列表响应
 message ServerListAck {
-  int32  code   = 1;
+  // 请求处理结果
+  ErrCode code = 1;
+  // 账号已注册的服务器列表
   repeated ServerAccount accounts = 2;
 }

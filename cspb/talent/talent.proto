@@ -1,38 +1,117 @@
 syntax = "proto3";
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_talent";
+import "cspb/common/error.proto";
 import "cspb/common/growth.proto";
+
+// 天赋节点定义
 message TalentNodeDefinition {
+  // 节点编号
   int32 node_id = 1;
+  // 父节点编号
   int32 parent_id = 2;
+  // 节点名称
   string name = 3;
+  // 效果说明
   string effect = 4;
+  // 属性加成
   GrowthBonuses bonuses = 5;
+  // 所属分支编号
   int32 branch_id = 6;
+  // 界面排序序号
   int32 ui_index = 7;
+  // 学习消耗点数
   int32 point_cost = 8;
+  // 是否为根节点
   bool is_root = 9;
+  // 图标资源标识
   string icon_key = 10;
 }
+
+// 天赋分支定义
 message TalentBranchDefinition {
+  // 分支编号
   int32 branch_id = 1;
+  // 分支名称
   string name = 2;
+  // 图标资源标识
   string icon_key = 3;
 }
+
+// 角色天赋数据
 message RoleTalentData {
+  // 版本号
   uint64 revision = 1;
+  // 累计获得点数
   int32 earned_points = 2;
+  // 已消耗点数
   int32 spent_points = 3;
+  // 可用点数
   int32 available_points = 4;
+  // 已学习节点列表
   repeated int32 learned_node_ids = 5;
+  // 节点定义列表
   repeated TalentNodeDefinition nodes = 6;
+  // 天赋带来的属性加成
   GrowthBonuses bonuses = 7;
+  // 角色实例编号
   string role_id = 8;
+  // 分支定义列表
   repeated TalentBranchDefinition branches = 9;
 }
-message GetRoleTalentReq { uint64 request_id = 1; }
-message LearnRoleTalentReq { uint64 request_id = 1; uint64 expected_revision = 2; int32 node_id = 3; }
-// 分支 -1 重置全部；0 到 3 重置指定分支，免费根节点始终保留。
-message ResetRoleTalentReq { uint64 request_id = 1; uint64 expected_revision = 2; int32 branch = 3; }
-message GetRoleTalentAck { uint64 request_id = 1; RoleTalentData data = 2; int32 code = 4; }
-message LearnRoleTalentAck { uint64 request_id = 1; RoleTalentData data = 2; int32 code = 4; }
-message ResetRoleTalentAck { uint64 request_id = 1; RoleTalentData data = 2; int32 code = 4; }
+
+// 查询角色天赋请求
+message GetRoleTalentReq {
+  // 请求流水号
+  uint64 request_id = 1;
+}
+
+// 学习角色天赋请求
+message LearnRoleTalentReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标节点编号
+  int32 node_id = 3;
+}
+
+// 重置角色天赋请求
+// 分支编号为 -1 时重置全部，为 0 到 3 时重置指定分支，免费根节点始终保留
+message ResetRoleTalentReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标分支编号
+  int32 branch = 3;
+}
+
+// 查询角色天赋响应
+message GetRoleTalentAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色天赋数据
+  RoleTalentData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 学习角色天赋响应
+message LearnRoleTalentAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色天赋数据
+  RoleTalentData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 重置角色天赋响应
+message ResetRoleTalentAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色天赋数据
+  RoleTalentData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}

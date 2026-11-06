@@ -4,34 +4,42 @@ option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_gateway";
 
 import "cspb/gateway/struct.proto";
 
-// SwitchMsg 通知 NatsActor 切换目标 serverID
+// 切换目标服务器消息
 message SwitchMsg {
+  // 旧服务器标识
   string server_id = 1;
-  string new_addr  = 2;
+  // 新目标地址
+  string new_addr = 2;
 }
 
-// StreamMsg 包装发往 game 的消息帧
+// 转发到游戏服的消息帧
 message StreamMsg {
+  // 待转发的消息帧
   Frame frame = 1;
 }
 
-// CheckDeleteMsg 延迟确认 active 实例是否真的下线
+// 延迟确认节点下线消息
 message CheckDeleteMsg {
+  // 服务器标识
   string server_id = 1;
-  string node_id   = 2;
+  // 节点标识
+  string node_id = 2;
 }
 
-// ConnRegMsg ConnActor 上线时注册到 GateServer
+// 连接注册消息
 message ConnRegMsg {
+  // 连接编号
   uint64 conn_id = 1;
 }
 
-// ConnUnregMsg ConnActor 下线时从 GateServer 注销
+// 连接注销消息
 message ConnUnregMsg {
+  // 连接编号
   uint64 conn_id = 1;
 }
 
-// BroadcastMsg 向所有在线 ConnActor 广播消息
+// 广播消息
 message BroadcastMsg {
+  // 广播载荷
   bytes data = 1;
 }

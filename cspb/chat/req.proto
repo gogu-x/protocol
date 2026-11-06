@@ -2,7 +2,10 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_chat";
 
+// 聊天请求
 message ChatReq {
-  int32  type    = 1;
+  // 聊天类型
+  int32 type = 1;
+  // 聊天内容
   string content = 2;
 }

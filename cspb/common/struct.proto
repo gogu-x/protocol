@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
+
+// 公共请求头
+message comm {
+  // 玩家编号
+  uint64 uID = 1;
+  // 服务器编号
+  uint32 serverID = 2;
+  // 会话编号
+  string sessionID = 3;
+}
+
+// 类型、编号和值组合结构
+message TypIDVal {
+  // 类型标识
+  string typ = 1;
+  // 配置编号
+  int32 id = 2;
+  // 数值
+  int64 val = 3;
+  // 附加参数
+  int32 pro = 4;
+}

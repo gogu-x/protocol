@@ -1,68 +1,116 @@
 syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_equipment";
-// 装备槽位；客户端展示文字仅由客户端本地化，服务端使用枚举进行校验。
+
+import "cspb/common/error.proto";
+// 装备槽位；客户端展示文字仅由客户端本地化，服务端使用枚举进行校验
 enum EquipSlot {
+  // 未指定
   EQUIP_SLOT_UNSPECIFIED = 0;
+  // 武器
   EQUIP_SLOT_WEAPON = 1;
+  // 头部
   EQUIP_SLOT_HEAD = 2;
+  // 身体
   EQUIP_SLOT_BODY = 3;
+  // 手部
   EQUIP_SLOT_HAND = 4;
+  // 腰部
   EQUIP_SLOT_WAIST = 5;
+  // 脚部
   EQUIP_SLOT_FOOT = 6;
 }
 
+// 装备条目
 message EquipmentItem {
+  // 实例编号
   string instance_id = 1;
+  // 配置编号
   int32 config_id = 2;
+  // 装备槽位
   EquipSlot slot = 3;
+  // 等级
   int32 level = 4;
+  // 精炼等级
   int32 refine_level = 5;
+  // 是否已穿戴
   bool equipped = 6;
+  // 最大生命值
   int64 max_hp = 7;
+  // 攻击值
   int64 attack = 8;
+  // 防御值
   int64 defense = 9;
+  // 速度值
   int64 speed = 10;
+  // 展示名称
   string display_name = 11;
+  // 稀有度标识
   string rarity = 12;
+  // 图标资源标识
   string icon_key = 13;
 }
 
+// 装备槽位定义
 message EquipmentSlotDefinition {
+  // 装备槽位
   EquipSlot slot = 1;
+  // 槽位名称
   string name = 2;
+  // 图标资源标识
   string icon_key = 3;
 }
 
+// 角色装备数据
 message RoleEquipmentData {
+  // 角色实例编号
   string role_id = 1;
+  // 角色等级
   int32 role_level = 2;
+  // 最大生命值
   int64 max_hp = 3;
+  // 攻击值
   int64 attack = 4;
+  // 防御值
   int64 defense = 5;
+  // 速度值
   int64 speed = 6;
+  // 装备列表
   repeated EquipmentItem items = 7;
+  // 装备槽位定义列表
   repeated EquipmentSlotDefinition slots = 8;
 }
 
-// 登录后与打开角色装备页时拉取权威装备清单。
+// 登录后与打开角色装备页时拉取权威装备清单
 message GetRoleEquipmentReq {
+  // 请求流水号
   uint64 request_id = 1;
 }
+// 查询角色装备响应
 message GetRoleEquipmentAck {
+  // 角色装备数据
   RoleEquipmentData data = 1;
+  // 请求流水号
   uint64 request_id = 3;
-  int32 code = 4;
+  // 请求处理结果
+  ErrCode code = 4;
 }
 
-// equipment_id 为空表示卸下指定槽位；否则服务端校验归属与槽位后穿戴。
+// 空表示卸下指定槽位；否则服务端校验归属与槽位后穿戴
 message ChangeRoleEquipmentReq {
+  // 装备槽位
   EquipSlot slot = 1;
+  // 装备实例编号，空值表示卸下指定槽位
   string equipment_id = 2;
+  // 请求流水号
   uint64 request_id = 3;
 }
+// 更换角色装备响应
 message ChangeRoleEquipmentAck {
+  // 角色装备数据
   RoleEquipmentData data = 1;
+  // 请求流水号
   uint64 request_id = 3;
-  int32 code = 4;
+  // 请求处理结果
+  ErrCode code = 4;
 }

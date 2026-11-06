@@ -2,21 +2,33 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_activity";
 
+import "cspb/common/error.proto";
 import "cspb/activity/struct.proto";
+
+// 活动列表响应
 message GetActivityListAck {
+  // 当前可见的活动列表
   repeated ActivityInfo activities = 1;
-  int32 code = 2;
+  // 请求处理结果
+  ErrCode code = 2;
 }
 
+// 参与活动响应
 message JoinActivityAck {
-  int32 code = 1;
+  // 请求处理结果
+  ErrCode code = 1;
 }
 
+// 活动进度响应
 message GetProgressAck {
-  int32          code     = 1;
+  // 请求处理结果
+  ErrCode code = 1;
+  // 当前玩家活动进度
   ActivityProgress progress = 2;
 }
 
+// 领取奖励响应
 message ClaimRewardAck {
-  int32 code = 1;
+  // 请求处理结果
+  ErrCode code = 1;
 }

@@ -2,26 +2,38 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_guild";
 
-// 工会职位
+// 公会职位
 enum GuildRole {
-  MEMBER  = 0; // 普通成员
-  OFFICER = 1; // 副会长
-  LEADER  = 2; // 会长
+  // 普通成员
+  MEMBER = 0;
+  // 副会长
+  OFFICER = 1;
+  // 会长
+  LEADER = 2;
 }
 
-// 工会成员快照
+// 公会成员快照
 message GuildMember {
-  uint64    uid   = 1;
-  string    name  = 2;
-  uint32    level = 3;
-  GuildRole role  = 4;
+  // 成员编号
+  uint64 uid = 1;
+  // 成员名称
+  string name = 2;
+  // 成员等级
+  uint32 level = 3;
+  // 成员职位
+  GuildRole role = 4;
 }
 
-// 工会信息
+// 公会信息
 message GuildInfo {
-  uint64               guild_id = 1;
-  string               name     = 2;
-  string               notice   = 3;
-  uint64               leader   = 4;
-  repeated GuildMember members  = 5;
+  // 公会编号
+  uint64 guild_id = 1;
+  // 公会名称
+  string name = 2;
+  // 公会公告
+  string notice = 3;
+  // 会长编号
+  uint64 leader = 4;
+  // 成员列表
+  repeated GuildMember members = 5;
 }

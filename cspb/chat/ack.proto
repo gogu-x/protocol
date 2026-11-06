@@ -2,7 +2,12 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_chat";
 
+import "cspb/common/error.proto";
+
+// 聊天发送响应
 message ChatAck {
-  int32 errCode = 1;
+  // 请求处理结果
+  ErrCode errCode = 1;
+  // 聊天状态码
   int32 state = 2;
 }

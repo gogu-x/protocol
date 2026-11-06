@@ -2,22 +2,32 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_gateway";
 
+// 网关登录请求
 message LoginReq {
-  string account   = 1;
-  string password  = 2;
-  uint32  server_id = 3;
+  // 账号名
+  string account = 1;
+  // 密码
+  string password = 2;
+  // 目标服务器编号
+  uint32 server_id = 3;
 }
 
+// 网关注册请求
 message RegisterReq {
-  string account   = 1;
-  string password  = 2;
-  uint32  server_id = 3;
+  // 账号名
+  string account = 1;
+  // 密码
+  string password = 2;
+  // 目标服务器编号
+  uint32 server_id = 3;
 }
 
+// 网关登出请求
 message LogoutReq {
 }
 
-// GetServerListReq may be sent before login to discover an account's registrations.
+// 查询账号服务器列表请求
 message GetServerListReq {
+  // 目标账号名
   string account = 1;
 }

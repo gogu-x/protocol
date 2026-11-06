@@ -2,23 +2,34 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
 
-// RoleCombatStatsData contains authoritative final combat attributes.
+import "cspb/common/error.proto";
+
+// 角色权威战斗属性
 message RoleCombatStatsData {
+  // 角色实例编号
   string role_id = 1;
+  // 最大生命值
   int64 max_hp = 2;
+  // 攻击值
   int64 attack = 3;
+  // 防御值
   int64 defense = 4;
+  // 速度值
   int64 speed = 5;
 }
 
-// GetRoleCombatStatsReq requests the current role's combat attributes.
+// 查询角色战斗属性请求
 message GetRoleCombatStatsReq {
+  // 请求流水号
   uint64 request_id = 1;
 }
 
-// GetRoleCombatStatsAck correlates the authoritative snapshot with its request.
+// 查询角色战斗属性响应
 message GetRoleCombatStatsAck {
+  // 请求流水号
   uint64 request_id = 1;
+  // 角色战斗属性快照
   RoleCombatStatsData data = 2;
-  int32 code = 3;
+  // 请求处理结果
+  ErrCode code = 3;
 }

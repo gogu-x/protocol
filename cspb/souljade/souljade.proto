@@ -1,40 +1,140 @@
 syntax = "proto3";
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_souljade";
+import "cspb/common/error.proto";
 import "cspb/common/growth.proto";
-// 属性为 1 生命、2 攻击、3 防御、4 速度；增幅使用千分比。
-message SoulJadeAffix { int32 attribute = 1; int32 permille = 2; }
+
+// 魂玉词条
+// 属性类型：1 生命、2 攻击、3 防御、4 速度；加成使用千分比
+message SoulJadeAffix {
+  // 属性类型
+  int32 attribute = 1;
+  // 属性加成千分比
+  int32 permille = 2;
+}
+
+// 魂玉条目
 message SoulJadeItem {
+  // 魂玉实例编号
   string instance_id = 1;
+  // 魂玉配置编号
   int32 config_id = 2;
+  // 魂玉名称
   string name = 3;
+  // 当前等级
   int32 level = 4;
+  // 等级上限
   int32 max_level = 5;
+  // 词条列表
   repeated SoulJadeAffix affixes = 6;
+  // 升级消耗
   int64 upgrade_cost = 7;
+  // 洗炼消耗
   int64 refine_cost = 8;
+  // 稀有度标识
   string rarity = 9;
+  // 图标资源标识
   string icon_key = 10;
 }
-message SoulJadeSlot { int32 slot = 1; string instance_id = 2; }
+
+// 魂玉槽位信息
+message SoulJadeSlot {
+  // 槽位编号
+  int32 slot = 1;
+  // 已镶嵌魂玉实例编号
+  string instance_id = 2;
+}
+
+// 角色魂玉数据
 message RoleSoulJadeData {
+  // 版本号
   uint64 revision = 1;
+  // 精华数量
   int64 essence = 2;
+  // 魂玉背包列表
   repeated SoulJadeItem items = 3;
+  // 槽位列表
   repeated SoulJadeSlot slots = 4;
+  // 魂玉带来的属性加成
   GrowthBonuses bonuses = 5;
+  // 角色实例编号
   string role_id = 6;
 }
-message GetRoleSoulJadeReq { uint64 request_id = 1; }
-// 六个通用槽位；实例为空时卸下，同一配置不能重复镶嵌。
-message ChangeRoleSoulJadeReq {
+
+// 查询角色魂玉请求
+message GetRoleSoulJadeReq {
+  // 请求流水号
   uint64 request_id = 1;
+}
+
+// 更换角色魂玉请求
+// 六个通用槽位；实例为空时表示卸下，同一配置不能重复镶嵌
+message ChangeRoleSoulJadeReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
   uint64 expected_revision = 2;
+  // 目标槽位编号
   int32 slot = 3;
+  // 目标魂玉实例编号
   string instance_id = 4;
 }
-message UpgradeRoleSoulJadeReq { uint64 request_id = 1; uint64 expected_revision = 2; string instance_id = 3; }
-message RefineRoleSoulJadeReq { uint64 request_id = 1; uint64 expected_revision = 2; string instance_id = 3; }
-message GetRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; int32 code = 4; }
-message ChangeRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; int32 code = 4; }
-message UpgradeRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; int32 code = 4; }
-message RefineRoleSoulJadeAck { uint64 request_id = 1; RoleSoulJadeData data = 2; int32 code = 4; }
+
+// 升级角色魂玉请求
+message UpgradeRoleSoulJadeReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标魂玉实例编号
+  string instance_id = 3;
+}
+
+// 洗炼角色魂玉请求
+message RefineRoleSoulJadeReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标魂玉实例编号
+  string instance_id = 3;
+}
+
+// 查询角色魂玉响应
+message GetRoleSoulJadeAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色魂玉数据
+  RoleSoulJadeData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 更换角色魂玉响应
+message ChangeRoleSoulJadeAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色魂玉数据
+  RoleSoulJadeData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 升级角色魂玉响应
+message UpgradeRoleSoulJadeAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色魂玉数据
+  RoleSoulJadeData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 洗炼角色魂玉响应
+message RefineRoleSoulJadeAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色魂玉数据
+  RoleSoulJadeData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}

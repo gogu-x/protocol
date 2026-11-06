@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
+
+// 请求处理错误码
+enum ErrCode {
+  // 成功
+  OK = 0;
+  // 未知错误
+  UNKNOWN = -1;
+  // 参数错误
+  PARAM = -2;
+  // 未授权
+  UNAUTHORIZED = -1001;
+  // 正在登录
+  LOGIN_IN_PROGRESS = -1002;
+  // 服务器不存在
+  SERVER_NOT_FOUND = -1003;
+  // 用户名已存在
+  USERNAME_EXISTS = -2001;
+  // 密码错误
+  WRONG_PASSWORD = -2002;
+  // 内部错误
+  INTERNAL = -2003;
+  // 账号不存在
+  ACCOUNT_NOT_FOUND = -2004;
+  // 公会已存在
+  GUILD_EXISTS = -3001;
+  // 公会不存在
+  GUILD_NOT_FOUND = -3002;
+  // 已加入公会
+  ALREADY_IN_GUILD = -3003;
+  // 未加入公会
+  NOT_IN_GUILD = -3004;
+  // 角色养成数据不可用
+  LOADOUT_UNAVAILABLE = -4001;
+  // 配置不可用
+  CONFIG_UNAVAILABLE = -4002;
+  // 数据版本已过期
+  STALE_REVISION = -4003;
+  // 槽位无效
+  INVALID_SLOT = -4004;
+  // 未拥有该物品
+  ITEM_NOT_OWNED = -4005;
+  // 物品状态无效
+  INVALID_ITEM_STATE = -4006;
+  // 装备数据不可用
+  EQUIPMENT_UNAVAILABLE = -4101;
+  // 装备无效
+  INVALID_EQUIPMENT = -4102;
+  // 魂玉重复镶嵌
+  DUPLICATE_JADE = -4201;
+  // 已达到等级上限
+  MAX_LEVEL_REACHED = -4202;
+  // 精华不足
+  INSUFFICIENT_ESSENCE = -4203;
+  // 词条生成失败
+  AFFIX_GENERATION_FAILED = -4204;
+  // 天赋节点无效
+  INVALID_TALENT_NODE = -4301;
+  // 天赋已学习
+  TALENT_ALREADY_LEARNED = -4302;
+  // 未满足天赋前置条件
+  TALENT_PREREQUISITE_MISSING = -4303;
+  // 天赋点不足
+  INSUFFICIENT_TALENT_POINTS = -4304;
+  // 天赋分支无效
+  INVALID_TALENT_BRANCH = -4305;
+  // 战斗服务不可用
+  BATTLE_UNAVAILABLE = -5001;
+  // 战斗请求超时
+  BATTLE_TIMEOUT = -5002;
+  // 战斗创建失败
+  BATTLE_CREATE_FAILED = -5003;
+  // 战斗请求无效
+  INVALID_BATTLE_REQUEST = -5004;
+  // 战斗进行中
+  BATTLE_IN_PROGRESS = -5005;
+  // 活动服务不可用
+  ACTIVITY_UNAVAILABLE = -6001;
+  // 活动不存在
+  ACTIVITY_NOT_FOUND = -6002;
+  // 活动未开放
+  ACTIVITY_NOT_OPEN = -6003;
+  // 尚未参与活动
+  ACTIVITY_NOT_JOINED = -6004;
+  // 已参与活动
+  ACTIVITY_ALREADY_JOINED = -6005;
+  // 未满足活动奖励领取条件
+  ACTIVITY_REWARD_NOT_READY = -6006;
+  // 活动奖励已领取
+  ACTIVITY_REWARD_ALREADY_CLAIMED = -6007;
+}

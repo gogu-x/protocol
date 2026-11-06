@@ -2,7 +2,12 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_auth";
 
+import "cspb/common/error.proto";
+
+// 登录游戏响应
 message LoginGameAck {
-  int32  code  = 1;
-  uint64   uid   = 2;
+  // 请求处理结果
+  ErrCode code = 1;
+  // 登录成功后的玩家编号
+  uint64 uid = 2;
 }
