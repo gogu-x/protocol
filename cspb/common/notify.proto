@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
+
+import "cspb/common/error.proto";
+
+// 通用错误通知；收到后终止对应类型请求的等待，不再等待该次业务 ACK。
+message ErrorNtf {
+  // 错误码，提示文案由客户端映射。
+  ErrCode code = 1;
+  // 对应请求的 protobuf 完整名称；不包含 Go 包路径。
+  string request_type = 2;
+}

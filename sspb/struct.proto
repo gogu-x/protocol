@@ -6,4 +6,6 @@ message event {
   string name = 1;
   int32  eventTyp = 2;
   map<string,int32> args =3;
+  reserved 4, 5, 6;
+  map<string,string> ext_args = 7; // 通用扩展参数，支持无精度损失的整数文本等业务值。
 }

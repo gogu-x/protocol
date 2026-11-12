@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_actv";
+
+// 获取活动列表请求。
+message GetActvListReq {}
+
+// 查询活动进度请求。
+message GetProgressReq {
+  // 目标活动实例编号。
+  uint64 actvId = 1;
+}
+
+// 领取活动奖励请求。
+message ClaimRewardReq {
+  // 目标活动实例编号。
+  uint64 actvId = 1;
+}

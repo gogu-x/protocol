@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_actv";
+
+import "cspb/common/error.proto";
+import "cspb/actv/struct.proto";
+
+// 活动列表响应。
+message GetActvListAck {
+  // 当前可见的活动列表。
+  repeated ActvInfo actvs = 1;
+  // 请求处理结果。
+  ErrCode code = 2;
+}
+
+// 活动进度响应。
+message GetProgressAck {
+  // 请求处理结果。
+  ErrCode code = 1;
+  // 当前玩家活动进度。
+  ActvProgress progress = 2;
+}
+
+// 领取奖励响应。
+message ClaimRewardAck {
+  // 请求处理结果。
+  ErrCode code = 1;
+}

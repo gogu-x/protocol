@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_actv";
+
+// 活动状态。
+enum ActvStatus {
+  // 未开始。
+  NOT_STARTED = 0;
+  // 进行中。
+  ONGOING = 1;
+  // 已结束。
+  ENDED = 2;
+}
+
+// 活动信息。
+message ActvInfo {
+  // 活动实例编号。
+  uint64 id = 1;
+  // 活动状态。
+  ActvStatus status = 2;
+  // 活动开始时间戳。
+  int64 startTime = 3;
+  // 活动结束时间戳。
+  int64 endTime = 4;
+  // 活动配置表 ID。
+  int32 cfgId = 5;
+  // 活动模板类型。
+  int32 templateType = 6;
+  // 活动归属类型。
+  ActvOwnerScope ownerScope = 7;
+  // 归属对象编号，根据 ownerScope 表示玩家、服务器或联盟编号。
+  uint64 ownerId = 8;
+  // 业务目标是否完成，由具体模板填充。
+  bool completed = 9;
+}
+
+// 玩家活动进度。
+message ActvProgress {
+  // 活动实例编号。
+  uint64 actvId = 1;
+  // 此进度所属的玩家编号，不是活动实例编号。
+  uint64 uid = 2;
+  // 当前进度值。
+  int32 progress = 3;
+  // 目标进度值。
+  int32 target = 4;
+  // 奖励是否已领取。
+  bool rewarded = 5;
+}
+
+// 活动实例归属范围。
+enum ActvOwnerScope {
+  // 未指定归属。
+  ACTV_OWNER_UNSPECIFIED = 0;
+  // 玩家归属。
+  ACTV_OWNER_PLAYER = 1;
+  // 服务器归属。
+  ACTV_OWNER_SERVER = 2;
+  // 联盟归属。
+  ACTV_OWNER_GUILD = 3;
+}

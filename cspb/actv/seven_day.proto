@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_actv";
+
+import "cspb/common/error.proto";
+
+// 七日登录的个人状态。
+message SevenDayLoginData {
+  // 活动实例编号。
+  uint64 actvId = 1;
+  // 累计有效登录天数，最多七天。
+  int32 loginDays = 2;
+  // 当天有效登录次数，最多一次。
+  int32 todayLoginCount = 3;
+  // 服务器时区下次零点的 Unix 秒。
+  int64 nextResetTime = 4;
+  // 是否已累计登录七天。
+  bool completed = 5;
+}
+
+// 查询个人七日登录状态，日常更新由服务端主动推送。
+message GetSevenDayLoginReq {
+  // 活动实例编号。
+  uint64 actvId = 1;
+}
+
+// 具体业务自行填充错误码和状态。
+message GetSevenDayLoginAck {
+  // 请求处理结果。
+  ErrCode code = 1;
+  // 七日登录状态。
+  SevenDayLoginData data = 2;
+}
+
+// 登录、跨日及进度变化时推送的完整个人状态。
+message SevenDayLoginNtf {
+  // 七日登录状态。
+  SevenDayLoginData data = 1;
+}
