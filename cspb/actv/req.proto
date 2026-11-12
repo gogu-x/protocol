@@ -16,3 +16,59 @@ message ClaimRewardReq {
   // 目标活动实例编号。
   uint64 actvId = 1;
 }
+
+// 查询个人七日登录状态，日常更新由服务端主动推送。
+message GetSevenDayLoginReq {
+  // 活动实例编号。
+  uint64 actvId = 1;
+}
+
+// 查询个人任务抽奖活动。
+message GetTaskLotteryReq {
+  // 主活动实例编号。
+  uint64 actvId = 1;
+}
+
+// 领取指定任务奖励。
+message ClaimActvTaskReq {
+  // 主活动实例编号。
+  uint64 actvId = 1;
+  // 任务配置编号。
+  int32 taskId = 2;
+  // 写请求序号，与抽奖共用，商店独立计数。
+  uint64 sequence = 3;
+}
+
+// 消耗普通资源抽奖。
+message DrawActvReq {
+  // 主活动实例编号。
+  uint64 actvId = 1;
+  // 抽奖次数。
+  int32 count = 2;
+  // 写请求序号。
+  uint64 sequence = 3;
+}
+
+// 购买商店商品。
+message BuyActvShopReq {
+  // 商店活动实例编号。
+  uint64 actvId = 1;
+  // 商品配置编号。
+  int32 goodsId = 2;
+  // 购买份数。
+  int32 count = 3;
+  // 写请求序号。
+  uint64 sequence = 4;
+}
+
+// 查询个人商店。
+message GetActvShopReq {
+  // 商店活动实例编号。
+  uint64 actvId = 1;
+}
+
+// 按每日规则刷新商店，不提前重置限购。
+message RefreshActvShopReq {
+  // 商店活动实例编号。
+  uint64 actvId = 1;
+}

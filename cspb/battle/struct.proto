@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_battle";
-import "cspb/common/growth.proto";
+
+import "cspb/common/struct.proto";
 
 // 创建战斗的业务类型
 enum BattleType {
@@ -235,52 +236,4 @@ message BattleUnitResult {
   int64 max_hp = 4;
   // 是否存活
   bool alive = 5;
-}
-
-// 战斗创建成功通知
-message BattleCreatedNtf {
-  // 战斗编号
-  string battle_id = 1;
-  // 玩家编号
-  uint64 uid = 2;
-  // 逻辑帧时长，单位为毫秒
-  int32 tick_duration_ms = 3;
-  // 参战单位名单。战斗创建时即已确定，随创建通知一并下发，
-  // 客户端可在进入战斗页的第一时间就把双方单位摆好，而不是等某个单位先行动
-  repeated BattleUnitResult units = 4;
-}
-
-// 一条战斗事件推送
-message BattleActionNtf {
-  // 战斗编号
-  string battle_id = 1;
-  // 玩家编号
-  uint64 uid = 2;
-  // 战斗事件
-  BattleEvent event = 3;
-}
-
-// 已完成的战斗结果
-message BattleFinishedNtf {
-  // 战斗编号
-  string battle_id = 1;
-  // 玩家编号
-  uint64 uid = 2;
-  // 战斗结算结果
-  BattleOutcome outcome = 3;
-  // 参战单位结果列表
-  repeated BattleUnitResult units = 4;
-  // 战斗结果校验值
-  string checksum = 5;
-  // 战斗类型，游戏服按爬塔、副本、首领等类型分发结算奖励，
-  // 仅凭结算结果和单位状态无法确定业务类型
-  BattleType battle_type = 6;
-}
-
-// 游戏服已处理战斗结算结果的确认通知
-message BattleResultConfirmedNtf {
-  // 战斗编号
-  string battle_id = 1;
-  // 玩家编号
-  uint64 uid = 2;
 }

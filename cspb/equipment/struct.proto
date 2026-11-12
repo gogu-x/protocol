@@ -2,7 +2,6 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_equipment";
 
-import "cspb/common/error.proto";
 // 装备槽位；客户端展示文字仅由客户端本地化，服务端使用枚举进行校验
 enum EquipSlot {
   // 未指定
@@ -79,38 +78,4 @@ message RoleEquipmentData {
   repeated EquipmentItem items = 7;
   // 装备槽位定义列表
   repeated EquipmentSlotDefinition slots = 8;
-}
-
-// 登录后与打开角色装备页时拉取权威装备清单
-message GetRoleEquipmentReq {
-  // 请求流水号
-  uint64 request_id = 1;
-}
-// 查询角色装备响应
-message GetRoleEquipmentAck {
-  // 角色装备数据
-  RoleEquipmentData data = 1;
-  // 请求流水号
-  uint64 request_id = 3;
-  // 请求处理结果
-  ErrCode code = 4;
-}
-
-// 空表示卸下指定槽位；否则服务端校验归属与槽位后穿戴
-message ChangeRoleEquipmentReq {
-  // 装备槽位
-  EquipSlot slot = 1;
-  // 装备实例编号，空值表示卸下指定槽位
-  string equipment_id = 2;
-  // 请求流水号
-  uint64 request_id = 3;
-}
-// 更换角色装备响应
-message ChangeRoleEquipmentAck {
-  // 角色装备数据
-  RoleEquipmentData data = 1;
-  // 请求流水号
-  uint64 request_id = 3;
-  // 请求处理结果
-  ErrCode code = 4;
 }

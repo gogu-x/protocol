@@ -2,8 +2,8 @@ syntax = "proto3";
 
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_actv";
 
-import "cspb/common/error.proto";
 import "cspb/actv/struct.proto";
+import "cspb/common/error.proto";
 
 // 活动列表响应。
 message GetActvListAck {
@@ -25,4 +25,90 @@ message GetProgressAck {
 message ClaimRewardAck {
   // 请求处理结果。
   ErrCode code = 1;
+}
+
+// 具体业务自行填充错误码和状态。
+message GetSevenDayLoginAck {
+  // 请求处理结果。
+  ErrCode code = 1;
+  // 七日登录状态。
+  SevenDayLoginData data = 2;
+}
+
+// 登录、跨日及进度变化时推送的完整个人状态。
+message SevenDayLoginNtf {
+  // 七日登录状态。
+  SevenDayLoginData data = 1;
+}
+
+// 查询结果。
+message GetTaskLotteryAck {
+  // 错误码。
+  ErrCode code = 1;
+  // 个人状态。
+  TaskLotteryState data = 2;
+}
+
+// 写操作结果，由玩家资源处理完成后确认。
+message ActvOperationAck {
+  // 错误码。
+  ErrCode code = 1;
+  // 原请求序号。
+  uint64 sequence = 2;
+  // 最新个人状态。
+  TaskLotteryState data = 3;
+  // 本次奖励，重复请求不重复执行。
+  repeated ActvRewardItem rewards = 4;
+  // 已受理，等待玩家资源处理结果。
+  bool pending = 5;
+}
+
+// 登录、任务、资产、兑换和跨日变更主动推送。
+message TaskLotteryNtf {
+  // 最新个人状态。
+  TaskLotteryState data = 1;
+}
+
+// 商店查询响应。
+message GetActvShopAck {
+  // 业务结果。
+  ErrCode code = 1;
+  // 商店状态。
+  ActvShopState data = 2;
+}
+
+// 商店购买响应，pending=true仅表示已受理，最终结果另行推送。
+message BuyActvShopAck {
+  // 业务结果。
+  ErrCode code = 1;
+  // 本次序号。
+  uint64 sequence = 2;
+  // 商店状态。
+  ActvShopState data = 3;
+  // 实际奖励。
+  repeated ActvRewardItem rewards = 4;
+  // 正在等待通用资产交易完成。
+  bool pending = 5;
+}
+
+// 商店状态主动通知。
+message ActvShopNtf {
+  // 商店状态。
+  ActvShopState data = 1;
+}
+
+// 通用活动任务进度推送，tasks为当前活动的完整任务列表。
+message ActvTasksNtf {
+  // 活动实例编号。
+  uint64 actvId = 1;
+  // 当前任务状态。
+  repeated ActvTaskState tasks = 2;
+}
+
+// 商店刷新响应。
+message RefreshActvShopAck {
+  // 业务结果。
+  ErrCode code = 1;
+  // 最新商店状态。
+  ActvShopState data = 2;
 }

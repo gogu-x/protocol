@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package platform;
+
+option go_package = "github.com/gogu-x/gogs/pb/pfpb/pb_pf";
+
+import "pfpb/ack.proto";
+import "pfpb/req.proto";
+import "pfpb/struct.proto";
+
+service AuthService {
+  rpc Register      (RegisterReq)      returns (AuthAck);
+  rpc Login         (AuthLoginReq)     returns (AuthAck);
+  rpc VerifyToken   (VerifyTokenReq)   returns (VerifyAck);
+  rpc GetServerList (GetServerListReq) returns (ServerListAck);
+}
+
+service OrderService {
+  rpc CreateOrder (CreateOrderReq) returns (OrderAck);
+  rpc QueryOrder  (QueryOrderReq)  returns (OrderDetail);
+}

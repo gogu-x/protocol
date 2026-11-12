@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
+
+// 查询角色战斗属性请求
+message GetRoleCombatStatsReq {
+  // 请求流水号
+  uint64 request_id = 1;
+}

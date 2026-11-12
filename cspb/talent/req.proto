@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_talent";
+
+// 查询角色天赋请求
+message GetRoleTalentReq {
+  // 请求流水号
+  uint64 request_id = 1;
+}
+
+// 学习角色天赋请求
+message LearnRoleTalentReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标节点编号
+  int32 node_id = 3;
+}
+
+// 重置角色天赋请求
+// 分支编号为 -1 时重置全部，为 0 到 3 时重置指定分支，免费根节点始终保留
+message ResetRoleTalentReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标分支编号
+  int32 branch = 3;
+}

@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_souljade";
+
+// 查询角色魂玉请求
+message GetRoleSoulJadeReq {
+  // 请求流水号
+  uint64 request_id = 1;
+}
+
+// 更换角色魂玉请求
+// 六个通用槽位；实例为空时表示卸下，同一配置不能重复镶嵌
+message ChangeRoleSoulJadeReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标槽位编号
+  int32 slot = 3;
+  // 目标魂玉实例编号
+  string instance_id = 4;
+}
+
+// 升级角色魂玉请求
+message UpgradeRoleSoulJadeReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标魂玉实例编号
+  string instance_id = 3;
+}
+
+// 洗炼角色魂玉请求
+message RefineRoleSoulJadeReq {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 期望版本号
+  uint64 expected_revision = 2;
+  // 目标魂玉实例编号
+  string instance_id = 3;
+}

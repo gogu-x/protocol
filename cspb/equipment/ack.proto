@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_equipment";
+
+import "cspb/common/error.proto";
+import "cspb/equipment/struct.proto";
+
+// 查询角色装备响应
+message GetRoleEquipmentAck {
+  // 角色装备数据
+  RoleEquipmentData data = 1;
+  // 请求流水号
+  uint64 request_id = 3;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 更换角色装备响应
+message ChangeRoleEquipmentAck {
+  // 角色装备数据
+  RoleEquipmentData data = 1;
+  // 请求流水号
+  uint64 request_id = 3;
+  // 请求处理结果
+  ErrCode code = 4;
+}

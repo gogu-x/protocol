@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_souljade";
+
+import "cspb/common/struct.proto";
+
+// 魂玉词条
+// 属性类型：1 生命、2 攻击、3 防御、4 速度；加成使用千分比
+message SoulJadeAffix {
+  // 属性类型
+  int32 attribute = 1;
+  // 属性加成千分比
+  int32 permille = 2;
+}
+
+// 魂玉条目
+message SoulJadeItem {
+  // 魂玉实例编号
+  string instance_id = 1;
+  // 魂玉配置编号
+  int32 config_id = 2;
+  // 魂玉名称
+  string name = 3;
+  // 当前等级
+  int32 level = 4;
+  // 等级上限
+  int32 max_level = 5;
+  // 词条列表
+  repeated SoulJadeAffix affixes = 6;
+  // 升级消耗
+  int64 upgrade_cost = 7;
+  // 洗炼消耗
+  int64 refine_cost = 8;
+  // 稀有度标识
+  string rarity = 9;
+  // 图标资源标识
+  string icon_key = 10;
+}
+
+// 魂玉槽位信息
+message SoulJadeSlot {
+  // 槽位编号
+  int32 slot = 1;
+  // 已镶嵌魂玉实例编号
+  string instance_id = 2;
+}
+
+// 角色魂玉数据
+message RoleSoulJadeData {
+  // 版本号
+  uint64 revision = 1;
+  // 精华数量
+  int64 essence = 2;
+  // 魂玉背包列表
+  repeated SoulJadeItem items = 3;
+  // 槽位列表
+  repeated SoulJadeSlot slots = 4;
+  // 魂玉带来的属性加成
+  GrowthBonuses bonuses = 5;
+  // 角色实例编号
+  string role_id = 6;
+}

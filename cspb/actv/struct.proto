@@ -59,3 +59,75 @@ enum ActvOwnerScope {
   // 联盟归属。
   ACTV_OWNER_GUILD = 3;
 }
+
+// 七日登录的个人状态。
+message SevenDayLoginData {
+  // 活动实例编号。
+  uint64 actvId = 1;
+  // 累计有效登录天数，最多七天。
+  int32 loginDays = 2;
+  // 当天有效登录次数，最多一次。
+  int32 todayLoginCount = 3;
+  // 服务器时区下次零点的 Unix 秒。
+  int64 nextResetTime = 4;
+  // 是否已累计登录七天。
+  bool completed = 5;
+}
+
+// 活动任务状态。
+message ActvTaskState {
+  // 任务配置编号。
+  int32 taskId = 1;
+  // 当前进度。
+  int64 progress = 2;
+  // 完成目标。
+  int64 target = 3;
+  // 状态：0进行中、1待领取、2已领取。
+  int32 status = 4;
+}
+
+// 兑换商品状态。
+message ActvGoodsState {
+  // 商品配置编号。
+  int32 goodsId = 1;
+  // 当前限购周期已购份数。
+  int64 bought = 2;
+}
+
+// 抽奖及兑换的奖励结果。
+message ActvRewardItem {
+  // 类型：1普通资源、2装备。
+  int32 rewardType = 1;
+  // 奖励配置编号。
+  int32 rewardId = 2;
+  // 奖励数量。
+  int64 count = 3;
+}
+
+// 任务抽奖活动自身的个人状态。
+message TaskLotteryState {
+  // 活动实例编号。
+  uint64 actvId = 1;
+  // 任务状态。
+  repeated ActvTaskState tasks = 2;
+  // 下一笔本活动写请求序号。
+  uint64 nextSequence = 3;
+  // 待完成的道具交易数量。
+  int32 pendingRewards = 4;
+  // 下次本地零点。
+  int64 nextResetTime = 5;
+}
+
+// 独立个人商店状态。
+message ActvShopState {
+  // 商店实例编号。
+  uint64 actvId = 1;
+  // 商品限购状态。
+  repeated ActvGoodsState goods = 3;
+  // 下一笔商店交易序号，与其他活动独立。
+  uint64 nextSequence = 4;
+  // 下一次当地零点。
+  int64 nextResetTime = 5;
+  // 是否存在正在处理的交易。
+  bool pending = 6;
+}

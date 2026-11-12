@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_equipment";
+
+import "cspb/equipment/struct.proto";
+
+// 登录后与打开角色装备页时拉取权威装备清单
+message GetRoleEquipmentReq {
+  // 请求流水号
+  uint64 request_id = 1;
+}
+
+// 空表示卸下指定槽位；否则服务端校验归属与槽位后穿戴
+message ChangeRoleEquipmentReq {
+  // 装备槽位
+  EquipSlot slot = 1;
+  // 装备实例编号，空值表示卸下指定槽位
+  string equipment_id = 2;
+  // 请求流水号
+  uint64 request_id = 3;
+}

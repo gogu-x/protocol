@@ -3,6 +3,13 @@ syntax = "proto3";
 option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_common";
 
 import "cspb/common/error.proto";
+import "cspb/common/struct.proto";
+
+// 玩家普通资源完整余额推送。
+message AssetsNtf {
+  // 当前资源列表。
+  repeated AssetBalance assets = 1;
+}
 
 // 通用错误通知；收到后终止对应类型请求的等待，不再等待该次业务 ACK。
 message ErrorNtf {
@@ -10,4 +17,14 @@ message ErrorNtf {
   ErrCode code = 1;
   // 对应请求的 protobuf 完整名称；不包含 Go 包路径。
   string request_type = 2;
+}
+
+// 查询角色战斗属性响应
+message GetRoleCombatStatsAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色战斗属性快照
+  RoleCombatStatsData data = 2;
+  // 请求处理结果
+  ErrCode code = 3;
 }

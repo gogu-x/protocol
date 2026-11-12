@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_souljade";
+
+import "cspb/common/error.proto";
+import "cspb/souljade/struct.proto";
+
+// 查询角色魂玉响应
+message GetRoleSoulJadeAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色魂玉数据
+  RoleSoulJadeData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 更换角色魂玉响应
+message ChangeRoleSoulJadeAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色魂玉数据
+  RoleSoulJadeData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 升级角色魂玉响应
+message UpgradeRoleSoulJadeAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色魂玉数据
+  RoleSoulJadeData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}
+
+// 洗炼角色魂玉响应
+message RefineRoleSoulJadeAck {
+  // 请求流水号
+  uint64 request_id = 1;
+  // 角色魂玉数据
+  RoleSoulJadeData data = 2;
+  // 请求处理结果
+  ErrCode code = 4;
+}

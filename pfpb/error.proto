@@ -1,5 +1,0 @@
-syntax = "proto3";
-
-package platform;
-
-option go_package = "github.com/gogu-x/gogs/pb/pfpb/pb_pf";

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "github.com/gogu-x/gogs/pb/cspb/pb_gateway";
+
+import "cspb/gateway/struct.proto";
+
+// 网关流式传输服务
+service Gateway {
+  // 双向流式转发消息帧
+  rpc Stream(stream Frame) returns (stream Frame);
+}
