@@ -112,6 +112,8 @@ enum BattleEventType {
   BATTLE_EVENT_TYPE_ACTION_CANCELLED = 9;
   // 状态已移除
   BATTLE_EVENT_TYPE_STATUS_REMOVED = 10;
+  // 中途加入的玩家单位，事件记录实例编号与入场血量。
+  BATTLE_EVENT_TYPE_UNIT_JOINED = 11;
 }
 
 // 行动跳过或取消的原因
@@ -222,6 +224,8 @@ message BattleEvent {
   int64 status_expire_tick = 24;
   // 状态刷新版本，较旧版本的到期任务不再生效
   uint64 status_version = 25;
+  // 入场事件携带新成员的完整单位快照。
+  BattleUnitResult joined_unit = 26;
 }
 
 // 一个单位的最终生命结果
@@ -236,4 +240,6 @@ message BattleUnitResult {
   int64 max_hp = 4;
   // 是否存活
   bool alive = 5;
+  // 玩家控制单位所属 UID，机器人单位为零。
+  uint64 owner_uid = 6;
 }

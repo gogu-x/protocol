@@ -19,4 +19,30 @@ message StartBattleReq {
   int32 monster_group_config_id = 5;
   // 来源节点编号，由游戏服填写
   uint32 source_node_id = 6;
+  reserved 8;
+  // 是否允许开战后增援。
+  bool allow_join = 10;
+  // 玩法服提供的额外初始成员；客户端填写的名单会被 Game 丢弃。
+  repeated InitialBattleMember initial_members = 11;
+  // 加入指定开放战斗，由游戏服提供本人的权威角色。
+  string join_battle_id = 9;
+  reserved 7;
+  reserved "interactive";
+}
+
+// 动作序号在本场、同一单位内单调递增。
+message BattleInputReq {
+  string battle_id = 1;
+  string unit_id = 2;
+  uint64 sequence = 3;
+  string skill_id = 4;
+  string target_id = 5;
+}
+
+// 已由玩法确定的参战者，与发起方同时入场。
+message InitialBattleMember {
+  uint64 uid = 1;
+  Role role = 2;
+  uint32 server_id = 3;
+  uint32 node_id = 4;
 }
