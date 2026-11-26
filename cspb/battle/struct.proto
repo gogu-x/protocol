@@ -114,6 +114,8 @@ enum BattleEventType {
   BATTLE_EVENT_TYPE_STATUS_REMOVED = 10;
   // 中途加入的玩家单位，事件记录实例编号与入场血量。
   BATTLE_EVENT_TYPE_UNIT_JOINED = 11;
+  // 战中增益已入账，携带最新单位与控制信息。
+  BATTLE_EVENT_TYPE_GRANT_APPLIED = 12;
 }
 
 // 行动跳过或取消的原因
@@ -178,8 +180,8 @@ message BattleEvent {
   uint64 sequence = 1;
   // 行动序号
   uint64 action = 2;
-  // 事件发生的逻辑帧
-  int64 tick = 3;
+  // 事件发生的战斗经过毫秒
+  int64 elapsed_ms = 3;
   // 战斗事件类型
   BattleEventType type = 4;
   // 行动单位编号
@@ -198,14 +200,14 @@ message BattleEvent {
   int64 hp_after = 11;
   // 目标单位编号列表
   repeated string target_ids = 13;
-  // 动作开始逻辑帧，仅技能使用事件填写
-  // 服务端发出技能使用事件时已计算命中和结束逻辑帧，随事件一起下发，
+  // 动作开始战斗经过毫秒，仅技能使用事件填写
+  // 服务端发出技能使用事件时已计算命中和结束战斗经过毫秒，随事件一起下发，
   // 客户端收到事件即可播放攻击动作，无需等待行动结束事件
-  int64 start_tick = 14;
-  // 动作命中逻辑帧，仅技能使用事件填写
-  int64 impact_tick = 15;
-  // 动作结束逻辑帧，仅技能使用事件填写
-  int64 end_tick = 16;
+  int64 start_ms = 14;
+  // 动作命中战斗经过毫秒，仅技能使用事件填写
+  int64 impact_ms = 15;
+  // 动作结束战斗经过毫秒，仅技能使用事件填写
+  int64 end_ms = 16;
   // 技能效果类型；以下字段按事件类型填写，未涉及的字段保持枚举零值或布尔假值
   EffectType effect_type = 17;
   // 状态类型
@@ -220,12 +222,15 @@ message BattleEvent {
   BattleOutcome outcome = 22;
   // 状态实例编号，施加、刷新、周期生效及移除事件携带
   uint64 status_instance_id = 23;
-  // 状态到期逻辑帧，按回合持续时为零
-  int64 status_expire_tick = 24;
+  // 状态到期战斗经过毫秒，按回合持续时为零
+  int64 status_expire_ms = 24;
   // 状态刷新版本，较旧版本的到期任务不再生效
   uint64 status_version = 25;
   // 入场事件携带新成员的完整单位快照。
   BattleUnitResult joined_unit = 26;
+  BattleGrant grant = 27;
+  BattleUnitResult updated_unit = 28;
+  BattleControl updated_control = 29;
 }
 
 // 一个单位的最终生命结果
@@ -242,4 +247,34 @@ message BattleUnitResult {
   bool alive = 5;
   // 玩家控制单位所属 UID，机器人单位为零。
   uint64 owner_uid = 6;
+  // 本场已领取记录；状态是否仍生效以状态快照为准。
+  repeated BattleGrant received_grants = 7;
+}
+
+// 玩法服确认的一次发放，同场同单位的发放编号唯一。
+message BattleGrant {
+  string grant_id = 1;
+  oneof effect {
+    int32 equip_config_id = 2;
+    int32 talent_node_id = 3;
+    int32 status_config_id = 4;
+  }
+}
+
+// 可控单位及其可用技能。
+message BattleControl {
+  // 只有拥有者的控制快照携带可领取掉落。
+  repeated BattleGrant available_grants = 7;
+  // 当前服务端结算属性和行动间隔。
+  int64 attack = 8;
+  int64 defense = 9;
+  int64 speed = 10;
+  int64 action_interval_ms = 11;
+  string unit_id = 1;
+  string basic_skill = 2;
+  repeated string active_skills = 3;
+  uint64 last_input_sequence = 5;
+  int64 next_ready_ms = 6;
+  reserved 4;
+  reserved "ready_tick";
 }

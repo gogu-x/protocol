@@ -46,3 +46,10 @@ message InitialBattleMember {
   uint32 server_id = 3;
   uint32 node_id = 4;
 }
+
+// 选择服务端已经为当前单位登记的掉落。
+message ClaimBattleGrantReq {
+  string battle_id = 1;
+  string unit_id = 2;
+  string grant_id = 3;
+}

@@ -1,0 +1,20 @@
+syntax = "proto3";
+option go_package = "github.com/gogu-x/gogs/pb/sspb";
+import "cspb/battle/struct.proto";
+
+// 由可信玩法服发往单场战斗，仅在玩家确认掉落或玩法决定奖励后提交。
+message ApplyBattleGrantReq {
+  string battle_id = 1;
+  uint64 uid = 2;
+  string unit_id = 3;
+  BattleGrant grant = 4;
+  // 为真时先向拥有者展示，收到领取请求后才生效。
+  bool require_pickup = 5;
+}
+
+// Battle 已处理本次发放的结果。
+message ApplyBattleGrantAck {
+  // 直接发放表示已生效，需要拾取时表示候选已登记。
+  bool accepted = 1;
+  string reason = 2;
+}

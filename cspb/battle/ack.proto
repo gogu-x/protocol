@@ -19,15 +19,15 @@ message BattleCreatedNtf {
   string battle_id = 1;
   // 玩家编号
   uint64 uid = 2;
-  // 逻辑帧时长，单位为毫秒
-  int32 tick_duration_ms = 3;
+  reserved 3;
+  reserved "tick_duration_ms";
   // 参战单位名单。战斗创建时即已确定，随创建通知一并下发，
   // 客户端可在进入战斗页的第一时间就把双方单位摆好，而不是等某个单位先行动
   repeated BattleUnitResult units = 4;
   repeated BattleControl controls = 5;
-  // 快照已包含的最后事件序号和当前帧。
+  // 快照已包含的最后事件序号和当前战斗毫秒。
   uint64 snapshot_sequence = 6;
-  int64 current_tick = 7;
+  int64 current_ms = 7;
   // 中途加入或重同步时仍然生效的状态。
   repeated BattleStatusView statuses = 8;
 }
@@ -67,17 +67,6 @@ message BattleResultConfirmedNtf {
   uint64 uid = 2;
 }
 
-// 可控单位及其可用技能。普攻与主动技能均即时结算。
-message BattleControl {
-  string unit_id = 1;
-  string basic_skill = 2;
-  repeated string active_skills = 3;
-  uint64 last_input_sequence = 5;
-  int64 next_ready_tick = 6;
-  reserved 4;
-  reserved "ready_tick";
-}
-
 // 每次玩家输入的权威回执。
 message BattleInputAck {
   string battle_id = 1;
@@ -85,9 +74,9 @@ message BattleInputAck {
   uint64 sequence = 3;
   ErrCode code = 4;
   uint64 action = 5;
-  int64 ready_tick = 6;
+  int64 ready_ms = 6;
   uint64 uid = 8;
-  int64 current_tick = 9;
+  int64 current_ms = 9;
 }
 
 // 创建或加入战斗的异步失败结果。
@@ -104,7 +93,15 @@ message BattleStatusView {
   string status_id = 2;
   uint64 instance_id = 3;
   uint64 version = 4;
-  int64 expire_tick = 5;
+  int64 expire_ms = 5;
   int32 remaining_turns = 6;
   string source_id = 7;
+}
+
+// 领取结果；成功时按增益事件更新战斗画面。
+message ClaimBattleGrantAck {
+  string battle_id = 1;
+  string unit_id = 2;
+  string grant_id = 3;
+  ErrCode code = 4;
 }
