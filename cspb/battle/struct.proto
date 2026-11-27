@@ -116,6 +116,8 @@ enum BattleEventType {
   BATTLE_EVENT_TYPE_UNIT_JOINED = 11;
   // 战中增益已入账，携带最新单位与控制信息。
   BATTLE_EVENT_TYPE_GRANT_APPLIED = 12;
+  // 架势已生效，附带站姿与行动间隔更新后的快照。
+  BATTLE_EVENT_TYPE_GUARD_STARTED = 13;
 }
 
 // 行动跳过或取消的原因
@@ -231,6 +233,24 @@ message BattleEvent {
   BattleGrant grant = 27;
   BattleUnitResult updated_unit = 28;
   BattleControl updated_control = 29;
+  // 伤害经过目标的架势减免，目标获得一次反击。
+  bool guarded = 30;
+  // 本次普攻伤害已消耗攻击者的反击机会。
+  bool counter = 31;
+}
+
+// 已经举刀、尚未命中的单体重击，以战斗经过毫秒计时。
+message BattleWindup {
+  // 与技能使用、行动结束或取消事件共用的行动序号。
+  uint64 action = 1;
+  // 举刀时锁定的目标单位。
+  string target_id = 2;
+  // 重击技能编号。
+  string skill_id = 3;
+  // 举刀时刻。
+  int64 start_ms = 4;
+  // 预定命中时刻。
+  int64 impact_ms = 5;
 }
 
 // 一个单位的最终生命结果
@@ -249,6 +269,12 @@ message BattleUnitResult {
   uint64 owner_uid = 6;
   // 本场已领取记录；状态是否仍生效以状态快照为准。
   repeated BattleGrant received_grants = 7;
+  // 此单位尚在准备的重击。
+  BattleWindup windup = 8;
+  // 架势截止时刻，以战斗经过毫秒计。
+  int64 guard_until_ms = 9;
+  // 下次有效普攻可以触发反击。
+  bool counter_ready = 10;
 }
 
 // 玩法服确认的一次发放，同场同单位的发放编号唯一。
@@ -270,6 +296,10 @@ message BattleControl {
   int64 defense = 9;
   int64 speed = 10;
   int64 action_interval_ms = 11;
+  // 再次可以使用架势的战斗经过毫秒。
+  int64 guard_ready_ms = 12;
+  // 此单位已解锁架势，输入技能编号为 guard。
+  bool can_guard = 13;
   string unit_id = 1;
   string basic_skill = 2;
   repeated string active_skills = 3;
